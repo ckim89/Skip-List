@@ -9,7 +9,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "sl_repository.h"
+#include <time.h>
 
+clock_t start, end;
+double cpu_time_used;
 unsigned long int next =1;
 
 void Get_next_op( char *random_op, int *random_int, int range );
@@ -18,6 +21,7 @@ void srand( unsigned int seed );
 
 int main(int argc, char *argv[])
 {
+	start = clock();
     unsigned int s = 1;
 
     int    Max_range=100;
@@ -112,7 +116,10 @@ int main(int argc, char *argv[])
     }
     printf("Operation summary: get %d, delete %d, insert %d\n", num_get, num_delete, num_insert );
     printf("Sum of all Repository_get data modulo 100 is %d\n", sum_data );
-}
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	printf("The total time is %f\n", cpu_time_used);
+}	
 
 void Get_next_op( char *random_op, int *random_int, int range )
 {
